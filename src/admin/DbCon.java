@@ -13,12 +13,12 @@ public class DbCon
     {
         int re = 0;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class jdbcClass = Class.forName("com.mysql.jdbc.Driver");
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ams","test","test");
             Statement st = cn.createStatement();
             re = st.executeUpdate(query);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"DB Error : "+e);
+            JOptionPane.showMessageDialog(null,"DB Error : " + e);
         }
         return re;
     }
@@ -27,6 +27,7 @@ public class DbCon
     {
         ResultSet rs = null;
         try {
+            Class jdbcClass = Class.forName("com.mysql.jdbc.Driver");
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ams","test","test");
             Statement st = cn.createStatement();
             rs = st.executeQuery(query);

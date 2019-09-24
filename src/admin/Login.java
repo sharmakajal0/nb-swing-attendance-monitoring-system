@@ -70,6 +70,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setText("User Type    :");
 
         uname.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        uname.setText("admin");
         uname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 unameActionPerformed(evt);
@@ -78,6 +79,11 @@ public class Login extends javax.swing.JFrame {
 
         utype.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         utype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrator", "Teacher" }));
+        utype.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                utypeActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel4.setText("WELCOME TO ATTENDANCE MANAGEMENT SYSTEM");
@@ -91,6 +97,7 @@ public class Login extends javax.swing.JFrame {
         });
 
         upass.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        upass.setText("admin");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -170,16 +177,16 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         DbCon db = new DbCon();
-        String u = uname.getText();
-        String p = upass.getText();
-        String t = utype.getSelectedItem().toString();
+        String username = uname.getText();
+        String password = new String(upass.getPassword());
+        String userType = utype.getSelectedItem().toString();
         
-        String query = "select * from users where userid = '"+u+"' and password = '"+p+"' and utype = '"+t+"'";
+        String query = "select * from users where userid = '"+username+"' and password = '"+password+"' and utype = '"+userType+"'";
         try {
             ResultSet rs = db.dql(query);
             if(rs.next())
             {
-                if(t.equals("Administrator"))
+                if(userType.equals("Administrator"))
                 {
                     AdminIndex obt = new AdminIndex();
                     obt.setVisible(true);
@@ -189,7 +196,7 @@ public class Login extends javax.swing.JFrame {
                 {
                     teacher.Index obt = new teacher.Index();
                     obt.setVisible(true);
-                    obt.setName(u);
+                    obt.setName(username);
                     this.setVisible(false);
                 }
             }
@@ -199,6 +206,10 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Error : "+e);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void utypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_utypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_utypeActionPerformed
 
     /**
      * @param args the command line arguments
